@@ -1,3 +1,5 @@
+#include "Figures/Sphere.h"
+#include "Scene.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 
@@ -37,7 +39,16 @@ bool initSDL(SDL_Window *&window, SDL_Renderer *&renderer) {
 int main() {
   SDL_Window *window = nullptr;
   SDL_Renderer *renderer = nullptr;
-  initSDL(window, renderer);
+  if (!initSDL(window, renderer)) {
+    return 1;
+  }
+
+  Scene scene;
+  auto sphere = std::make_unique<Sphere>();
+  sphere->x = 400;
+  sphere->y = 300;
+  sphere->radius = 50.0f;
+  scene.addFigure(std::move(sphere));
 
   bool running = true;
   while (running) {
@@ -49,3 +60,5 @@ int main() {
   SDL_Quit();
   return 0;
 }
+
+#include "Scene.h"
